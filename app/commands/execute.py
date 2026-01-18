@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 
 def get_executable(file: str) -> str:
     paths = os.getenv("PATH", "").split(os.pathsep)
@@ -16,7 +17,7 @@ def execute(*args: str) -> None:
     if fullPath:
         try:
             result = subprocess.run([file] + list(args[1:]), capture_output=True, text=True)
-            print(result.stdout)
+            sys.stdout.write(result.stdout)
         except subprocess.CalledProcessError as e:
             print(f"Error: {e.cmd} exited with non-zero status {e.returncode}")
             print(e.stdout); print(e.stderr)

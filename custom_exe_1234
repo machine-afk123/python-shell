@@ -1,0 +1,17 @@
+#!/usr/bin/env python3
+import sys
+import hashlib
+
+def main():
+    args = sys.argv
+    print(f"Program was passed {len(args)} args (including program name).")
+    for i, arg in enumerate(args):
+        label = "(program name)" if i == 0 else ""
+        print(f"Arg #{i} {label}: {arg}")
+    # Example signature: hash of all args joined
+    signature = hash(" ".join(args))
+    print(f"Program Signature: {signature}")
+
+if __name__ == "__main__":
+    main()
+
