@@ -1,20 +1,19 @@
 import sys
-
+from commands.type import check_command
 
 def main():
     while True:
         sys.stdout.write("$ ")
         usr_input = input()
-        # for every arg we want the first to be the command
         usr_input_args = usr_input.split()
-        command = usr_input_args[0]
+        command = usr_input_args[0] if usr_input_args else ""
         match command:
             case "exit":
                 break
             case "echo":
-                # if usr_input_args[1].startswith("-"):
-                #     continue
                 print(" ".join(usr_input_args[1:]))
+            case "type":
+                check_command(*usr_input_args[1:])
             case "":
                 continue
             case _:
