@@ -13,6 +13,6 @@ def check_command(*args: str) -> None:
         if command in builtins:
             print(f"{command} is a shell builtin")
         else:
-            print(f"{command}: command not found")
+            print(f"{command}: not found")
     
     return
