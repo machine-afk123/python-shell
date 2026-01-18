@@ -1,5 +1,5 @@
 import sys
-from commands.type import check_command
+from app.commands.type import check_command
 
 def main():
     while True:
