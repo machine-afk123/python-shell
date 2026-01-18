@@ -2,8 +2,11 @@ import sys
 
 
 def main():
-    # TODO: Uncomment the code below to pass the first stage
+    # while True:
     sys.stdout.write("$ ")
+    usr_input = input()
+    if usr_input:
+        print(f"{usr_input}: command not found")
     pass
 
 
