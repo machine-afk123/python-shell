@@ -1,5 +1,6 @@
 import sys
 from app.commands.type import check_command
+from app.commands.execute import execute
 
 def main():
     while True:
@@ -17,7 +18,7 @@ def main():
             case "":
                 continue
             case _:
-                print(f"{usr_input}: command not found")
+                execute(*usr_input_args)
 
 if __name__ == "__main__":
     main()
