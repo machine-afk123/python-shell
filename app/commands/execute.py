@@ -15,11 +15,10 @@ def execute(*args: str) -> None:
     fullPath = get_executable(file)
     if fullPath:
         try:
-            result = subprocess.run([fullPath] + list(args[1:]), capture_output=True, text=True)
+            result = subprocess.run([file] + list(args[1:]), capture_output=True, text=True)
             print(result.stdout)
         except subprocess.CalledProcessError as e:
             print(f"Error: {e.cmd} exited with non-zero status {e.returncode}")
             print(e.stdout); print(e.stderr)
     else:
         print(f"{file}: command not found")
-        
