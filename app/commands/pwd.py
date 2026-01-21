@@ -1,4 +1,4 @@
 from pathlib import Path
 
-def pwd():
+def pwd() -> None:
     print(Path.cwd())

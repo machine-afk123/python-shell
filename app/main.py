@@ -2,6 +2,7 @@ import sys
 from app.commands.type import check_command
 from app.commands.execute import execute
 from app.commands.pwd import pwd
+from app.commands.cd import cd
 
 def main():
     while True:
@@ -18,6 +19,9 @@ def main():
                 check_command(*usr_input_args[1:])
             case "pwd":
                 pwd()
+            case "cd":
+                path = usr_input_args[1] if len(usr_input_args) > 1 else ""
+                cd(path)
             case "":
                 continue
             case _:
