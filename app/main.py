@@ -1,6 +1,7 @@
 import sys
 from app.commands.type import check_command
 from app.commands.execute import execute
+from app.commands.pwd import pwd
 
 def main():
     while True:
@@ -15,6 +16,8 @@ def main():
                 print(" ".join(usr_input_args[1:]))
             case "type":
                 check_command(*usr_input_args[1:])
+            case "pwd":
+                pwd()
             case "":
                 continue
             case _:
