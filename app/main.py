@@ -3,6 +3,7 @@ from app.commands.type import check_command
 from app.commands.execute import execute
 from app.commands.pwd import pwd
 from app.commands.cd import cd
+from app.commands.echo import echo
 
 def main():
     while True:
@@ -14,7 +15,7 @@ def main():
             case "exit":
                 break
             case "echo":
-                print(" ".join(usr_input_args[1:]))
+                echo(usr_input)
             case "type":
                 check_command(*usr_input_args[1:])
             case "pwd":
