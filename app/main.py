@@ -4,8 +4,10 @@ from app.commands.execute import execute
 from app.commands.pwd import pwd
 from app.commands.cd import cd
 from app.commands.echo import echo
+from app.features import initialize_completer
 
 def main():
+    initialize_completer()
     while True:
         sys.stdout.write("$ ")
         usr_input = input()
