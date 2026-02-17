@@ -6,6 +6,7 @@ from app.commands.cd import cd
 from app.commands.echo import echo
 from app.features import initialize_completer
 
+
 def main():
     initialize_completer()
     while True:
@@ -29,6 +30,7 @@ def main():
                 continue
             case _:
                 execute(*usr_input_args)
+
 
 if __name__ == "__main__":
     main()

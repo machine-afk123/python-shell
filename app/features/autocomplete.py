@@ -1,14 +1,17 @@
 import readline
 from app.utilities.load_builtin import get_builtins
+from app.commands.execute import load_executable_filenames
 
-builtins = get_builtins()
+builtins: set[str] = get_builtins()
+executables: set[str] = load_executable_filenames()
+all = builtins.union(executables)
 
 
 def completer(text: str, state: int) -> str:
     # custom completer function
     if state == 0:
         if text:
-            matches = [match for match in builtins if match.startswith(text)]
+            matches = [match for match in all if match.startswith(text)]
         else:
             matches = builtins[:]
 

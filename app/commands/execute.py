@@ -2,7 +2,8 @@ import os
 import subprocess
 import sys
 
-def get_executable(file: str) -> str:
+
+def get_executable_path(file: str) -> str:
     paths = os.getenv("PATH", "").split(os.pathsep)
     for path in paths:
         fullPath = os.path.join(path, file)
@@ -11,15 +12,28 @@ def get_executable(file: str) -> str:
 
     return ""
 
+
+def load_executable_filenames() -> set[str]:
+    paths = os.getenv("PATH", "").split(os.pathsep)
+    filenames = {path.split("/")[-1] for path in paths}
+    if filenames:
+        return filenames
+
+    return set()
+
+
 def execute(*args: str) -> None:
     file = args[0]
-    fullPath = get_executable(file)
+    fullPath = get_executable_path(file)
     if fullPath:
         try:
-            result = subprocess.run([file] + list(args[1:]), capture_output=True, text=True)
+            result = subprocess.run(
+                [file] + list(args[1:]), capture_output=True, text=True
+            )
             sys.stdout.write(result.stdout)
         except subprocess.CalledProcessError as e:
             print(f"Error: {e.cmd} exited with non-zero status {e.returncode}")
-            print(e.stdout); print(e.stderr)
+            print(e.stdout)
+            print(e.stderr)
     else:
         print(f"{file}: command not found")
