@@ -4,14 +4,13 @@ from app.commands.execute import load_executable_filenames
 
 builtins: set[str] = get_builtins()
 executables: set[str] = load_executable_filenames()
-all = builtins.union(executables)
-
+all_matches = builtins.union(executables)
 
 def completer(text: str, state: int) -> str:
     # custom completer function
     if state == 0:
         if text:
-            matches = [match for match in all if match.startswith(text)]
+            matches = [match for match in all_matches if match.startswith(text)]
         else:
             matches = builtins[:]
 

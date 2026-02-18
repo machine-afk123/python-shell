@@ -3,11 +3,13 @@ import subprocess
 import sys
 
 
-def get_executable_path(file: str) -> str:
+def get_executable_path(file: str, absolute: bool = True) -> str:
     paths = os.getenv("PATH", "").split(os.pathsep)
     for path in paths:
         fullPath = os.path.join(path, file)
         if os.access(fullPath, os.X_OK):
+            if not absolute:
+                return file
             return fullPath
 
     return ""
@@ -15,11 +17,17 @@ def get_executable_path(file: str) -> str:
 
 def load_executable_filenames() -> set[str]:
     paths = os.getenv("PATH", "").split(os.pathsep)
-    filenames = {path.split("/")[-1] for path in paths}
-    if filenames:
-        return filenames
-
-    return set()
+    executable_contents = set()
+    for dir in paths:
+        if os.path.isdir(dir):
+            contents = os.listdir(dir)
+            executables = {
+                content
+                for content in contents
+                if (os.access(os.path.join(dir, content), os.X_OK))
+            }
+            executable_contents.update(executables)
+    return executable_contents
 
 
 def execute(*args: str) -> None:
