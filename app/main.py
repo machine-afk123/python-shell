@@ -10,15 +10,14 @@ from app.features import initialize_completer
 def main():
     initialize_completer()
     while True:
-        sys.stdout.write("$ ")
-        usr_input = input()
+        usr_input = input("$ ")
         usr_input_args = usr_input.split()
         command = usr_input_args[0] if usr_input_args else ""
         match command:
             case "exit":
                 break
             case "echo":
-                echo(usr_input)
+                echo(usr_input) 
             case "type":
                 check_command(*usr_input_args[1:])
             case "pwd":
