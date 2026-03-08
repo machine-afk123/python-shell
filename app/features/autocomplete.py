@@ -46,7 +46,7 @@ def completer(text: str, state: int) -> str:
 
 def initialize_completer():
     readline.set_completion_display_matches_hook(format_matches_hook)
-    readline.parse_and_bind("set completion-query-items off")
+    readline.parse_and_bind("set completion-query-items 0")
     readline.set_completer(completer)
     if "libedit" in readline.__doc__:
         readline.parse_and_bind("bind ^I rl_complete")
