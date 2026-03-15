@@ -7,7 +7,7 @@ import termios
 
 builtins: set[str] = get_builtins()
 executables: set[str] = load_executable_filenames()
-all_matches = builtins.union(executables)
+all_matches = list(builtins.union(executables))
 
 def format_matches_hook(
     substitution: str, matches: list[str], longest_match_length: int
@@ -15,9 +15,25 @@ def format_matches_hook(
     print()
     print("  ".join(matches))
     # line_buffer = readline.get_line_buffer()
-    sys.stdout.write("$ " + readline.get_line_buffer())
+    sys.stdout.write("$ ")
     sys.stdout.flush()
 
+def longestCommonPrefix(strs: list[str]) -> str | None:
+    if not strs: # edge case
+        return None
+    
+    common = strs[0]
+    for string in strs:
+        l = 0; r = 0; prefix = ""
+        while l < len(common) and r < len(string):
+            if common[l] == string[r]:
+                prefix += common[l]
+                l += 1; r += 1
+            else:
+                break
+        common = prefix
+    
+    return common
 
 def completer(text: str, state: int) -> str:
     # custom completer function
@@ -29,7 +45,7 @@ def completer(text: str, state: int) -> str:
                 match for match in all_matches if match.startswith(text)
             ]
         else:
-            completer.matches = builtins[:]
+            completer.matches = builtins[:] # this is the array of all the matches
 
     if state >= len(completer.matches):
         return None
@@ -37,6 +53,10 @@ def completer(text: str, state: int) -> str:
         if ctype in (9, 37):
             sys.stdout.write("\a")  # first time a <TAB> is pressed
             sys.stdout.flush()
+        
+        if len(completer.matches) > 1 and state == 0:
+            return longestCommonPrefix(completer.matches)
+
         return completer.matches[state]
 
 

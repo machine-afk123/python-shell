@@ -6,7 +6,7 @@ data = Path(__file__).resolve().parent.parent / "data" / "builtins.txt"
 
 
 # lazy load the builtins file
-def get_builtins() -> None:
+def get_builtins() -> set[str]:
     mtime = os.path.getmtime(data)
     return load_builtins(mtime)
 
