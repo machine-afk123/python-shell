@@ -1,4 +1,4 @@
-import readline
+import gnureadline as readline
 import sys
 from app.utilities.load_builtin import get_builtins
 from app.commands.execute import load_executable_filenames
@@ -9,17 +9,13 @@ builtins: set[str] = get_builtins()
 executables: set[str] = load_executable_filenames()
 all_matches = builtins.union(executables)
 
-
 def format_matches_hook(
     substitution: str, matches: list[str], longest_match_length: int
 ):
-    for match in sorted(matches):
-        print(match, end="  ", flush=True)
     print()
-
-    # buf = readline.get_line_buffer()
-    readline.clear_history()
-    sys.stdout.write("$ ")
+    print("  ".join(matches))
+    # line_buffer = readline.get_line_buffer()
+    sys.stdout.write("$ " + readline.get_line_buffer())
     sys.stdout.flush()
 
 
@@ -35,8 +31,8 @@ def completer(text: str, state: int) -> str:
         else:
             completer.matches = builtins[:]
 
-    if state > len(completer.matches):
-        return
+    if state >= len(completer.matches):
+        return None
     else:
         if ctype in (9, 37):
             sys.stdout.write("\a")  # first time a <TAB> is pressed
